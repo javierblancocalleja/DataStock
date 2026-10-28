@@ -4,6 +4,9 @@ import es.iesisidra.datastock.servicio.Inventario;
 import es.iesisidra.datastock.util.ColoresConsola;
 import es.iesisidra.datastock.util.LectorConsola;
 import es.iesisidra.datastock.ficheros.ExploradorRutas;
+import es.iesisidra.datastock.ficheros.ImportacionException;
+import es.iesisidra.datastock.ficheros.ImportadorJson;
+import es.iesisidra.datastock.ficheros.ResultadoImportacion;
 
 /**
  * Presentación de menús y navegación de la primera fase de DataStock.
@@ -32,7 +35,7 @@ public class MenuPrincipal {
             opcion = LectorConsola.leerOpcion("Selecciona una opción: ", 0, 6);
             switch (opcion) {
                 case 1 -> explorarRuta();
-                case 2 -> pendiente("RF-FIC-02 · Importar productos desde JSON");
+                case 2 -> importarJson();
                 case 3 -> pendiente("RF-FIC-03 · Importar productos desde XML");
                 case 4 -> menuConsultas();
                 case 5 -> menuExportaciones();
@@ -49,6 +52,26 @@ public class MenuPrincipal {
         System.out.println(ColoresConsola.pintar("                 FASE 1 - UT1", ColoresConsola.CIAN));
         System.out.println(ColoresConsola.pintar("================================================", ColoresConsola.CIAN));
         System.out.println(ColoresConsola.pintar("Productos en memoria: " + inventario.getProductos().size(), ColoresConsola.GRIS));
+    }
+
+    /** RF-FIC-01: pide una ruta y delega la exploración en ExploradorRutas. */
+    private void explorarRuta() {
+        System.out.println("\n===== EXPLORAR RUTA =====");
+        String ruta = LectorConsola.leerTexto("Ruta: ");
+        ExploradorRutas.explorar(ruta);
+    }
+
+    /** RF-FIC-02: pide la ruta y delega la importación en ImportadorJson. */
+    private void importarJson() {
+        System.out.println("\n===== IMPORTAR JSON =====");
+        String ruta = LectorConsola.leerTexto("Ruta: ");
+        try {
+            ResultadoImportacion resultado = new ImportadorJson(inventario).importar(ruta);
+            resultado.imprimir();
+        } catch (ImportacionException ex) {
+            System.out.println(ColoresConsola.pintar("ERROR: " + ex.getMessage(), ColoresConsola.ROJO));
+            System.out.println("Importación cancelada: el inventario no ha cambiado.");
+        }
     }
 
     private void menuConsultas() {
@@ -68,13 +91,6 @@ public class MenuPrincipal {
                 default -> throw new IllegalStateException("Opción inesperada");
             }
         } while (opcion != 0);
-    }
-
-    /** RF-FIC-01: pide una ruta y delega la exploración en ExploradorRutas. */
-    private void explorarRuta() {
-        System.out.println("\n===== EXPLORAR RUTA =====");
-        String ruta = LectorConsola.leerTexto("Ruta: ");
-        ExploradorRutas.explorar(ruta);
     }
 
     private void menuExportaciones() {
