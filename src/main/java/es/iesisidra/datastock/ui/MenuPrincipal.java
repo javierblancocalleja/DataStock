@@ -6,6 +6,7 @@ import es.iesisidra.datastock.util.LectorConsola;
 import es.iesisidra.datastock.ficheros.ExploradorRutas;
 import es.iesisidra.datastock.ficheros.ImportacionException;
 import es.iesisidra.datastock.ficheros.ImportadorJson;
+import es.iesisidra.datastock.ficheros.ImportadorXml;
 import es.iesisidra.datastock.ficheros.ResultadoImportacion;
 
 /**
@@ -36,7 +37,7 @@ public class MenuPrincipal {
             switch (opcion) {
                 case 1 -> explorarRuta();
                 case 2 -> importarJson();
-                case 3 -> pendiente("RF-FIC-03 · Importar productos desde XML");
+                case 3 -> importarXml();
                 case 4 -> menuConsultas();
                 case 5 -> menuExportaciones();
                 case 6 -> menuSerializacion();
@@ -67,6 +68,20 @@ public class MenuPrincipal {
         String ruta = LectorConsola.leerTexto("Ruta: ");
         try {
             ResultadoImportacion resultado = new ImportadorJson(inventario).importar(ruta);
+            resultado.imprimir();
+        } catch (ImportacionException ex) {
+            System.out.println(ColoresConsola.pintar("ERROR: " + ex.getMessage(), ColoresConsola.ROJO));
+            System.out.println("Importación cancelada: el inventario no ha cambiado.");
+        }
+    }
+
+    /** RF-FIC-03: pide la ruta y delega la importación en ImportadorXml. */
+    private void importarXml() {
+        System.out.println("\n===== IMPORTAR XML =====");
+        String ruta = LectorConsola.leerTexto("Ruta: ");
+        try {
+            System.out.println("Leyendo documento XML...");
+            ResultadoImportacion resultado = new ImportadorXml(inventario).importar(ruta);
             resultado.imprimir();
         } catch (ImportacionException ex) {
             System.out.println(ColoresConsola.pintar("ERROR: " + ex.getMessage(), ColoresConsola.ROJO));
