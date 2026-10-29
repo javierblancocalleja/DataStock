@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogo>
+  <producto>
+    <codigo>TEC-001</codigo>
+    <nombre>Teclado USB</nombre>
+    <precio>19.95</precio>
+    <stock>12</stock>
+    <categoriaId>1</categoriaId>
+    <proveedorId>1</proveedorId>
+  </producto>
+  <producto>
+    <codigo>HUB-004</codigo>
+    <nombre>Hub USB 7 puertos</nombre>
+    <precio>100.00</precio>
+    <stock>5</stock>
+    <categoriaId>1</categoriaId>
+    <proveedorId>1</proveedorId>
+  </producto>
+  <producto>
+    <codigo>MON-003</codigo>
+    <nombre>Monitor 24 pulgadas</nombre>
+    <precio>149.99</precio>
+    <stock>8</stock>
+    <categoriaId>2</categoriaId>
+    <proveedorId>2</proveedorId>
+  </producto>
+</catalogo>

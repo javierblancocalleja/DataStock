@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalogo [
+  <!ENTITY externa SYSTEM "file:///etc/passwd">
+]>
+<catalogo>
+  <producto>
+    <codigo>&externa;</codigo>
+    <nombre>Producto con entidad externa</nombre>
+    <precio>10.00</precio>
+    <stock>1</stock>
+    <categoriaId>1</categoriaId>
+    <proveedorId>1</proveedorId>
+  </producto>
+</catalogo>
