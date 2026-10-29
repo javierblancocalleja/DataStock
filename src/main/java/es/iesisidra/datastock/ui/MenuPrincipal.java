@@ -18,11 +18,13 @@ import es.iesisidra.datastock.ficheros.ResultadoImportacion;
 public class MenuPrincipal {
     private final Inventario inventario;
     private final PantallaConsultas pantallaConsultas;
+    private final PantallaExportacion pantallaExportacion;
 
     /** @param inventario colección común de productos de esta ejecución. */
-        public MenuPrincipal(Inventario inventario) {
+    public MenuPrincipal(Inventario inventario) {
         this.inventario = inventario;
         this.pantallaConsultas = new PantallaConsultas(inventario);
+        this.pantallaExportacion = new PantallaExportacion(inventario);
     }
 
     /** Ejecuta el menú principal hasta que el usuario selecciona salir. */
@@ -121,8 +123,8 @@ public class MenuPrincipal {
             System.out.println("0. Volver al menú principal");
             opcion = LectorConsola.leerOpcion("Selecciona una opción: ", 0, 2);
             switch (opcion) {
-                case 1 -> pendiente("RF-FIC-05 · Exportar JSON");
-                case 2 -> pendiente("RF-FIC-05 · Exportar XML");
+                case 1 -> pantallaExportacion.exportarJson();
+                case 2 -> pantallaExportacion.exportarXml();
                 case 0 -> { }
                 default -> throw new IllegalStateException("Opción inesperada");
             }
