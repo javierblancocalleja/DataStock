@@ -19,12 +19,14 @@ public class MenuPrincipal {
     private final Inventario inventario;
     private final PantallaConsultas pantallaConsultas;
     private final PantallaExportacion pantallaExportacion;
+    private final PantallaSerializacion pantallaSerializacion;
 
     /** @param inventario colección común de productos de esta ejecución. */
     public MenuPrincipal(Inventario inventario) {
         this.inventario = inventario;
         this.pantallaConsultas = new PantallaConsultas(inventario);
         this.pantallaExportacion = new PantallaExportacion(inventario);
+        this.pantallaSerializacion = new PantallaSerializacion(inventario);
     }
 
     /** Ejecuta el menú principal hasta que el usuario selecciona salir. */
@@ -140,18 +142,11 @@ public class MenuPrincipal {
             System.out.println("0. Volver al menú principal");
             opcion = LectorConsola.leerOpcion("Selecciona una opción: ", 0, 2);
             switch (opcion) {
-                case 1 -> pendiente("RF-FIC-06 · Guardar inventario");
-                case 2 -> pendiente("RF-FIC-06 · Recuperar inventario");
+                case 1 -> pantallaSerializacion.guardar();
+                case 2 -> pantallaSerializacion.recuperar();
                 case 0 -> { }
                 default -> throw new IllegalStateException("Opción inesperada");
             }
         } while (opcion != 0);
-    }
-
-    /** Sustituir las llamadas por servicios propios a medida que se implementen los RF. */
-    private void pendiente(String requisito) {
-        System.out.println(ColoresConsola.pintar("[PENDIENTE] " + requisito, ColoresConsola.AMARILLO));
-        System.out.println("Esta funcionalidad debe desarrollarla el alumnado.");
-        LectorConsola.pausar();
     }
 }
