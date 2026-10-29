@@ -17,9 +17,13 @@ import es.iesisidra.datastock.ficheros.ResultadoImportacion;
  */
 public class MenuPrincipal {
     private final Inventario inventario;
+    private final PantallaConsultas pantallaConsultas;
 
     /** @param inventario colección común de productos de esta ejecución. */
-    public MenuPrincipal(Inventario inventario) { this.inventario = inventario; }
+        public MenuPrincipal(Inventario inventario) {
+        this.inventario = inventario;
+        this.pantallaConsultas = new PantallaConsultas(inventario);
+    }
 
     /** Ejecuta el menú principal hasta que el usuario selecciona salir. */
     public void iniciar() {
@@ -99,9 +103,9 @@ public class MenuPrincipal {
             System.out.println("0. Volver al menú principal");
             opcion = LectorConsola.leerOpcion("Selecciona una opción: ", 0, 3);
             switch (opcion) {
-                case 1 -> pendiente("RF-FIC-04 · Listar productos");
-                case 2 -> pendiente("RF-FIC-04 · Buscar por código");
-                case 3 -> pendiente("RF-FIC-04 · Buscar por nombre");
+                case 1 -> pantallaConsultas.listar();
+                case 2 -> pantallaConsultas.buscarPorCodigo();
+                case 3 -> pantallaConsultas.buscarPorNombre();
                 case 0 -> { }
                 default -> throw new IllegalStateException("Opción inesperada");
             }
